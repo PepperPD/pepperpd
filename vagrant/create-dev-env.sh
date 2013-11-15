@@ -435,12 +435,13 @@ fi
 
 output "Installing edX pre-requirements"
 pip install -U pip
+pip install numpy==1.6.2
 pip install -r $BASE/pepperpd/vagrant/requirements.txt
 
 output "Installing edX requirements"
 # Install prereqs
 cd $BASE/pepperpd
-rake install_prereqs
+rake 
 
 # Final dependecy
 output "Finishing Touches"
@@ -449,11 +450,13 @@ pip install argcomplete
 
 cd $BASE/pepperpd
 bundle install
-rake install_prereqs
 
 mkdir -p "$BASE/log"
 mkdir -p "$BASE/db"
 mkdir -p "$BASE/data"
+
+cd $BASE/edx-platform
+rake assets
 
 ./manage.py lms syncdb --noinput --migrate
 ./manage.py cms syncdb --noinput --migrate
@@ -465,40 +468,5 @@ git config --global push.default current
 
 
 ### DONE
-
-if [[ ! $quiet ]]; then
-    cat<<END
-   Success!!
-
-   To start using Django you will need to activate the local Python
-   environment. Ensure the following lines are added to your
-   login script, and source your login script if needed:
-
-        source $VEWRAPPER
-
-   Then, every time you're ready to work on the project, just run
-
-        $ workon pepperpd
-
-   To start the Django on port 8000
-
-        $ rake lms
-
-   Or to start Django on a different <port#>
-
-        $ ./manage.py lms runserver <port#>
-
-  If the  Django development server starts properly you
-  should see:
-
-      Development server is running at http://127.0.0.1:<port#>/
-      Quit the server with CONTROL-C.
-
-  Connect your browser to http://127.0.0.1:<port#> to
-  view the Django site.
-
-
-END
-fi
 
 exit 0
