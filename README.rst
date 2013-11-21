@@ -179,7 +179,7 @@ Once the branch is deployed to `master`, the branch is deployable, since
 Deployment
 ==========
 
-In general, organizations which deploy often and routinely, fare better than
+In general, organizations which deploy often and routinely fare better than
 organizations that deploy major upgrades only occasionally, as it is more
 difficult to manage risk when deployments involve a lot of change and the
 organization isn't used to deploying.  Many highly visible organizations use a
@@ -199,4 +199,77 @@ as possible.  Since the same deployment process will be occuring routinely and
 constantly at every step and in every environment, we can have high confidence
 in its correctness and our understanding of what it's doing.
 
+Code
+====
+
+The deployment installs the edX platform as a separate entity from the PepperPD
+code.  The PepperPD repository contains only the code which is layered on top of
+and overrides code in the edX platform.  At the high level the PepperPD code is
+organized like so::
+
+    pepperpd/
+      Code used in common between CMS and LMS.
+
+    pepperpd_lms/
+      urls.py
+        Define URLs for PepperPD LMS.
+      templates/
+        Templates used for PepperPD LMS.
+      djangoapps/
+        Python code for PepperPD LMS.
+
+    pepperpd_cms/
+      urls.py
+        Define URLs for PepperPD LMS.
+      templates/
+        Templates used for PepperPD LMS.
+      djangoapps/
+        Python code for PepperPD LMS.
+
+Django Apps
+-----------
+
+For the most part, you'll want to subdivide portions of the site into separate
+Django apps.  Each Django app lives in a folder underneath the `djangoapps`
+folder of either `pepperpd_lms` or `pepperpd_cms`.  Be careful that you don't
+use the same name for an app as used in edX, as each app is imported as a top
+level package and names will conflict.  
+
+Proof of concept
+----------------
+
+For both the lms and cms I have provided a tiny Django app called `poc` for
+"Proof of Concept".  This app is provided as an example, demonstrating how to
+override functionality in the edX base, and is not intended to be part of a
+final product.  
+
+Adding or overriding views
+--------------------------
+
+Examples are provided in `urls.py` in both the lms and cms.  Overriding a view
+means changing which view callable is called in response to a particular URL.
+The helper function, `override`, is provided in each of the `urls.py` source
+files for overriding already defined edX URLs.  New URLs can be added in the
+standard way for adding Django URLs.  See the `urls.py` source code for examples
+of each operation.
+
+Adding or overriding templates
+------------------------------
+
+Templates may be added in the `templates` folder under `pepperpd_lms` or
+`pepperpd_cms`.  Templates which have the same name as a template used by edX
+will be used before the corresponding edX version.  This provides a quick, easy
+way to change the appearance of the application without having to modify any
+Python code.  Examples are given in both the LMS and CMS of overriding the home
+page.
+
+Adding or overriding static files
+---------------------------------
+
+TODO
+
+Unit Tests
+==========
+
+TODO
 
