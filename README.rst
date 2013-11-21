@@ -95,6 +95,34 @@ any new code you have written has test coverage.  When the feature works or the
 bug has been fixed, all tests pass, and all new code has test coverage, you are
 ready to submit your branch to QA.
 
+While working on your branch, you should commit and push early and often.  To 
+commit your work, you first add the files you've changed to the commit using
+`git add`::
+
+    $ git add <file_or_folder> <file_or_folder>
+
+Use `git status` to see what you are about to commit::
+
+    $ git status
+
+Then use `git commit` to commit your changes::
+
+    $ git commit
+
+Write a terse, but detailed message regarding your commit.  Think in terms of 
+what your colleagues will need to know to understand the changes and why you
+made them.  Once you're committed, you should push your changes to GitHub.  The
+first time you will need to create a remote branch to go with the local branch
+you created earlier for your work::
+
+    $ git push -u origin <branch-name>
+
+This creates the remote branch, sets up your local branch to track this remote
+branch, and pushes your changes to the remote branch.  Once your local branch
+is set up to track the remote branch, pushing is a little easier::
+
+    $ git push
+
 Submit branch to quality assurance (QA)
 ---------------------------------------
 
