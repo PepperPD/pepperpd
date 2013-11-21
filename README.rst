@@ -136,6 +136,12 @@ more work.  If the work is rejected, go back to the previous step and start
 again.  If the work is accepted, the branch is eligible to be merged to 
 `master`.
 
+As part of the tooling for deploying branches, there will be ways to halt and
+restart branch services as well as destroy virtual machines when we are done 
+with them.  Obviously, keeping the cloud hosting bill low is a priority so we'll
+want to carefully manage how long a branch lives in QA and coordinate having it
+up only when testing is under way.
+
 Issue a pull request
 --------------------
 
@@ -176,5 +182,21 @@ Deployment
 In general, organizations which deploy often and routinely, fare better than
 organizations that deploy major upgrades only occasionally, as it is more
 difficult to manage risk when deployments involve a lot of change and the
-organization isn't used to deploying.
+organization isn't used to deploying.  Many highly visible organizations use a
+continuous deployment model where changes to `master` are automatically deployed
+to production.  Other organizations might do deployments once or twice a week
+during periods of intense development.  What you want to avoid is deploying 
+weeks or months worth of work all in one go.  
+
+What I propose, is the development of a deployment script which automates all
+critical aspects of deployment, making deployment routine and easy.  There are
+a few technologies currently in use in the Python community: Fabric, Ansible,
+etc...  Part of the process would be to choose one.  I envision the deployment 
+script will be able to handle provisioning a local Vagrant based development
+environment, the QA branch deployments, a preproduction staging environment, and
+the production environment, keeping as much the same between these environments
+as possible.  Since the same deployment process will be occuring routinely and
+constantly at every step and in every environment, we can have high confidence
+in its correctness and our understanding of what it's doing.
+
 
