@@ -16,3 +16,6 @@ def configure(namespace):
     templates = cms / 'templates'
     namespace['TEMPLATE_DIRS'].insert(0, templates)
     namespace['MAKO_TEMPLATES']['main'].insert(0, templates)
+
+    # Add our static files to head of list
+    namespace['STATICFILES_DIRS'].insert(0, cms / 'static')

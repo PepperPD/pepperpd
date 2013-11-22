@@ -266,7 +266,10 @@ page.
 Adding or overriding static files
 ---------------------------------
 
-TODO
+Adding or overriding static files is as easy as adding or overriding templates.
+Simply drop files in the `static` folder of `pepperpd_lms` or `pepperpd_cms` and
+they'll get picked up.  I've modified the logos for both the lms and cms by way
+of demonstration.
 
 Unit Tests
 ==========
